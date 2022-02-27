@@ -6,16 +6,13 @@ import gulpSass from "gulp-sass";
 import bro from "gulp-bro";
 import babelify from "babelify";
 import include from "gulp-file-include";
+import sourcemaps from "gulp-sourcemaps";
 
-const sass = gulpSass(dartSass); 
+const sass = gulpSass(dartSass);
 
-const routes = {  
-    inc: {
-        src: "src/index.html",
-        dest: "build"
-    },
+const routes = {
     html: {
-        src: "src/*.html",
+        src: "src/**/*.html",
         dest: "build"
     },
     img: {
@@ -24,7 +21,8 @@ const routes = {
     },
     scss: {
         src: "src/scss/**/*.scss",
-        dest: "build"
+        dest: "build/scss",
+        dest2: "src/scss"
     },
     js: {
         src: "src/js/main.js",
@@ -32,20 +30,16 @@ const routes = {
     },
 }
 
-const clean = async () => del(["build"]);
-
-const includes = async () =>
-    gulp.src([routes.inc.src])
-        .pipe(include({
-            prefix: '@@',
-            basepath: '@file'
-        }))
-        .pipe(gulp.dest(routes.inc.dest));
+const clean = async () => del(["build", "src/scss/style.css"]);
 
 const htmlOut = async () =>
     gulp
         .src(routes.html.src)
-        .pipe(gulp.dest(routes.html.dest));
+        .pipe(include({
+            prefix: '@@',
+            basepath: '@file'
+        }))
+        .pipe(gulp.dest(routes.html.dest))
 
 const imgOut = async () =>
     gulp
@@ -56,8 +50,11 @@ const imgOut = async () =>
 const scssOut = async () =>
     gulp
         .src(routes.scss.src)
+        .pipe(sourcemaps.init())
         .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
-        .pipe(gulp.dest(routes.scss.dest));
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest(routes.scss.dest))
+        .pipe(gulp.dest(routes.scss.dest2));
 
 const jsOut = async () =>
     gulp
@@ -69,12 +66,12 @@ const jsOut = async () =>
             ]
         }))
         .pipe(gulp.dest(routes.js.dest));
+
 const watches = async () => {
-    gulp.watch(routes.inc.src, includes);
     gulp.watch(routes.html.src, htmlOut);
     gulp.watch(routes.img.src, imgOut);
     gulp.watch(routes.scss.src, scssOut);
     gulp.watch(routes.js.src, jsOut);
 }
 
-export const dev = gulp.series([clean, includes, htmlOut, imgOut, scssOut, jsOut, watches]);
+export const dev = gulp.series([clean, htmlOut, imgOut, scssOut, jsOut, watches]);
