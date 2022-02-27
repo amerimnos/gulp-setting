@@ -1,4 +1,4 @@
-import { random } from './util';
+import { random } from './util.js';
 
-
-console.log(random(1000));
+console.log(random(10));
+alert('111');
