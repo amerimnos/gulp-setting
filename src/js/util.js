@@ -1,0 +1,1 @@
+export const random = num => Math.random() * num;

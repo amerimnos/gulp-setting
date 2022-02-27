@@ -1,0 +1,39 @@
+{
+  "name": "gulp_test",
+  "version": "1.0.0",
+  "description": "gulp setting",
+  "main": "index.js",
+  "scripts": {
+    "dev": "gulp dev",
+    "build": "gulp build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amerimnos/gulp-setting.git"
+  },
+  "keywords": [
+    "gulp",
+    "setting"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amerimnos/gulp-setting/issues"
+  },
+  "homepage": "https://github.com/amerimnos/gulp-setting#readme",
+  "devDependencies": {
+    "@babel/core": "^7.17.5",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/register": "^7.17.0",
+    "babelify": "^10.0.0",
+    "del": "^6.0.0",
+    "gulp": "^4.0.2",
+    "gulp-bro": "^2.0.0",
+    "gulp-file-include": "^2.3.0",
+    "gulp-image": "^6.3.1",
+    "gulp-sass": "^5.1.0",
+    "sass": "^1.49.9",
+    "uglifyify": "^5.0.2"
+  },
+  "type": "module"
+}
